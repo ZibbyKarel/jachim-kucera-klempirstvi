@@ -1,0 +1,67 @@
+{
+  "common": {
+    "skipToContent": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "backToServices": "Back to services",
+    "allProjects": "All projects",
+    "moreAbout": "More about",
+    "nonbindingInquiry": "Free inquiry",
+    "region": "Pilsen region and surroundings"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "hint": "Explore the house — click on its parts",
+    "servicesHeading": "What we do",
+    "servicesIntro": "From the truss to the last gutter. Four crafts under one roof.",
+    "projectsHeading": "Selected projects",
+    "projectsIntro": "A part of what we have built across the Pilsen region in recent years.",
+    "aboutHeading": "Who builds it",
+    "contactHeading": "Let's talk"
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "Tell us a few words about your roof. We'll get back to you and arrange a visit — free and with no obligation.",
+    "name": "Name",
+    "phone": "Phone",
+    "service": "Service",
+    "message": "Message",
+    "messageOptional": "Message (optional)",
+    "selectService": "Select a service",
+    "serviceOther": "Other",
+    "submit": "Send inquiry",
+    "submitting": "Sending…",
+    "success": "Thank you! We'll get back to you as soon as possible.",
+    "errors": {
+      "nameRequired": "Please enter your name.",
+      "phoneRequired": "Please enter your phone number.",
+      "phoneInvalid": "Enter a phone number like +420 777 123 456.",
+      "serviceRequired": "Please select a service.",
+      "generic": "We couldn't send your message. Please call us directly at {phone}."
+    },
+    "infoHeading": "Where to find us",
+    "areaLabel": "Service area"
+  },
+  "about": {
+    "valuesHeading": "What we stand for",
+    "timelineHeading": "Our journey",
+    "certificatesHeading": "Certificates and references"
+  },
+  "service": {
+    "includesHeading": "What it includes",
+    "galleryHeading": "From our work",
+    "ctaHeading": "Need advice?",
+    "ctaText": "Write to us and we'll arrange a visit. Free and with no obligation."
+  },
+  "projects": {
+    "filterAll": "All",
+    "year": "Year",
+    "location": "Location"
+  }
+}

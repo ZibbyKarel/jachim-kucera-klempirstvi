@@ -1,0 +1,67 @@
+{
+  "common": {
+    "skipToContent": "Přeskočit na obsah",
+    "menu": "Menu",
+    "close": "Zavřít",
+    "backToServices": "Zpět na služby",
+    "allProjects": "Všechny realizace",
+    "moreAbout": "Více o službě",
+    "nonbindingInquiry": "Nezávazná poptávka",
+    "region": "Plzeňský kraj a okolí"
+  },
+  "nav": {
+    "home": "Domů",
+    "services": "Služby",
+    "projects": "Realizace",
+    "about": "O nás",
+    "contact": "Kontakt"
+  },
+  "home": {
+    "hint": "Prozkoumejte dům — klikněte na jeho části",
+    "servicesHeading": "Co umíme",
+    "servicesIntro": "Od krovu po poslední okap. Čtyři řemesla pod jednou střechou.",
+    "projectsHeading": "Vybrané realizace",
+    "projectsIntro": "Část toho, co jsme za poslední roky postavili po Plzeňském kraji.",
+    "aboutHeading": "Kdo to staví",
+    "contactHeading": "Pojďme se domluvit"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "intro": "Napište nám pár slov o vaší střeše. Ozveme se a domluvíme se na prohlídce — nezávazně a zdarma.",
+    "name": "Jméno",
+    "phone": "Telefon",
+    "service": "Služba",
+    "message": "Zpráva",
+    "messageOptional": "Zpráva (nepovinné)",
+    "selectService": "Vyberte službu",
+    "serviceOther": "Jiné",
+    "submit": "Odeslat poptávku",
+    "submitting": "Odesílám…",
+    "success": "Děkujeme! Ozveme se vám co nejdříve.",
+    "errors": {
+      "nameRequired": "Vyplňte prosím jméno.",
+      "phoneRequired": "Vyplňte prosím telefon.",
+      "phoneInvalid": "Zadejte telefon ve formátu +420 777 123 456.",
+      "serviceRequired": "Vyberte prosím službu.",
+      "generic": "Zprávu se nepodařilo odeslat. Zavolejte nám prosím přímo na {phone}."
+    },
+    "infoHeading": "Kde nás zastihnete",
+    "areaLabel": "Provozní oblast"
+  },
+  "about": {
+    "valuesHeading": "Na čem si zakládáme",
+    "timelineHeading": "Naše cesta",
+    "certificatesHeading": "Certifikáty a reference"
+  },
+  "service": {
+    "includesHeading": "Co zahrnuje",
+    "galleryHeading": "Z naší práce",
+    "ctaHeading": "Potřebujete poradit?",
+    "ctaText": "Napište nám a domluvíme se na prohlídce. Nezávazně a zdarma."
+  },
+  "projects": {
+    "filterAll": "Vše",
+    "year": "Rok",
+    "location": "Lokalita"
+  }
+}

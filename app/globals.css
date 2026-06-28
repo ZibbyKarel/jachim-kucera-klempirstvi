@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Design tokeny zrcadlí tailwind.config.ts — pro použití mimo utility třídy. */
+  --wood-dark: #1a1410;
+  --wood-medium: #2c1f14;
+  --wood-warm: #8b5e3c;
+  --wood-light: #c4955a;
+  --wood-amber: #d47f3a;
+  --steel-dark: #2d3748;
+  --steel-medium: #4a5568;
+  --steel-light: #718096;
+  --cream: #f5ecd7;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-wood-dark font-body text-cream antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--wood-amber);
+    color: var(--wood-dark);
+  }
+
+  /* Viditelný a konzistentní focus ring napříč webem. */
+  :focus-visible {
+    outline: 2px solid var(--wood-amber);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* SVG skupiny domu nemají vlastní border-radius, ale focus ring chceme. */
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--wood-amber);
+    outline-offset: 4px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  .container-content {
+    @apply mx-auto w-full max-w-content px-6 md:px-10;
+  }
+
+  /* Jemný papírový / sépiový grain přes tmavá pozadí. */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .eyebrow {
+    @apply font-body text-xs uppercase tracking-widest text-wood-light;
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-craft;
+  }
+  .link-underline:hover::after {
+    @apply origin-left scale-x-100;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Sépiový/grain overlay pro fotky realizací — mizí při hoveru. */
+  .photo-aged {
+    filter: sepia(0.35) saturate(0.85) contrast(0.95);
+    transition: filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .photo-aged,
+  .photo-aged:hover {
+    filter: sepia(0) saturate(1) contrast(1);
+  }
+}
+
+/* Pokud uživatel preferuje omezený pohyb, vypneme i CSS smooth scroll. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

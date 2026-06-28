@@ -1,0 +1,117 @@
+import type { Metadata } from 'next'
+import { setRequestLocale, getTranslations } from 'next-intl/server'
+import { SITE } from '@/lib/constants'
+import { ContactForm } from '@/components/ui/ContactForm'
+
+export const metadata: Metadata = {
+  title: 'Kontakt — Nezávazná poptávka',
+  description:
+    'Napište nebo zavolejte. Domluvíme se na nezávazné prohlídce střechy v Plzeňském kraji. Tesařství, pokrývačství a klempířství.',
+  alternates: { canonical: '/kontakt' },
+}
+
+export default async function KontaktPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  const t = await getTranslations('contact')
+
+  return (
+    <div className="bg-wood-dark">
+      <header className="container-content pb-12 pt-36 md:pt-44">
+        <span className="eyebrow">{t('title')}</span>
+        <h1 className="mt-3 max-w-3xl font-display text-5xl italic leading-tight text-cream md:text-7xl">
+          Pojďme se domluvit
+        </h1>
+        <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-cream/70">
+          {t('intro')}
+        </p>
+      </header>
+
+      <div className="container-content grid gap-14 pb-28 md:grid-cols-[1.2fr_1fr] md:gap-20">
+        {/* Formulář */}
+        <div className="order-2 md:order-1">
+          <ContactForm />
+        </div>
+
+        {/* Kontaktní info + mapa */}
+        <aside className="order-1 space-y-10 md:order-2">
+          <div>
+            <h2 className="eyebrow mb-4">{t('infoHeading')}</h2>
+            <a
+              href={`tel:${SITE.phoneHref}`}
+              className="block font-display text-4xl italic text-wood-amber transition-colors hover:text-wood-light"
+            >
+              {SITE.phone}
+            </a>
+            <a
+              href={`mailto:${SITE.email}`}
+              className="link-underline mt-3 inline-block font-body text-base text-cream/80 hover:text-cream"
+            >
+              {SITE.email}
+            </a>
+          </div>
+
+          <div>
+            <h3 className="font-body text-xs uppercase tracking-widest text-cream/50">
+              {t('areaLabel')}
+            </h3>
+            <p className="mt-2 font-body text-base text-cream">{SITE.region}</p>
+          </div>
+
+          {/* Statická „mapa" v tmavém stylu (placeholder pro Mapbox) */}
+          <div
+            className="relative aspect-[4/3] overflow-hidden rounded-sm border border-cream/10"
+            role="img"
+            aria-label="Mapa provozní oblasti — Plzeňský kraj"
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundColor: '#1f1813',
+                backgroundImage:
+                  'linear-gradient(0deg, rgba(196,149,90,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(196,149,90,0.08) 1px, transparent 1px)',
+                backgroundSize: '32px 32px',
+              }}
+            />
+            {/* stylizované „silnice" */}
+            <svg
+              className="absolute inset-0 h-full w-full"
+              viewBox="0 0 400 300"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M-20 210 C80 180 120 120 200 150 S340 120 420 90"
+                stroke="#8B5E3C"
+                strokeWidth="2"
+                opacity="0.5"
+              />
+              <path
+                d="M40 -20 C70 80 30 160 90 240 S140 360 120 420"
+                stroke="#8B5E3C"
+                strokeWidth="1.5"
+                opacity="0.35"
+              />
+              <circle cx="200" cy="150" r="7" fill="#D47F3A" />
+              <circle
+                cx="200"
+                cy="150"
+                r="16"
+                stroke="#D47F3A"
+                strokeWidth="1.5"
+                opacity="0.5"
+              />
+            </svg>
+            <span className="absolute bottom-3 left-3 font-display text-xl italic text-cream">
+              Plzeň
+            </span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  )
+}
