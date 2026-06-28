@@ -43,7 +43,7 @@ export default async function KontaktPage({
             <h2 className="eyebrow mb-4">{t('infoHeading')}</h2>
             <a
               href={`tel:${SITE.phoneHref}`}
-              className="block font-display text-4xl italic text-wood-amber transition-colors hover:text-wood-light"
+              className="block font-display text-4xl italic text-wood-amber transition-colors hover:text-wood-warm"
             >
               {SITE.phone}
             </a>
@@ -62,7 +62,7 @@ export default async function KontaktPage({
             <p className="mt-2 font-body text-base text-cream">{SITE.region}</p>
           </div>
 
-          {/* Statická „mapa" v tmavém stylu (placeholder pro Mapbox) */}
+          {/* Statická „mapa" ve světlém stylu (placeholder pro Mapbox) */}
           <div
             className="relative aspect-[4/3] overflow-hidden rounded-sm border border-cream/10"
             role="img"
@@ -71,9 +71,9 @@ export default async function KontaktPage({
             <div
               className="absolute inset-0"
               style={{
-                backgroundColor: '#1f1813',
+                backgroundColor: '#efeae0',
                 backgroundImage:
-                  'linear-gradient(0deg, rgba(196,149,90,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(196,149,90,0.08) 1px, transparent 1px)',
+                  'linear-gradient(0deg, rgba(45,43,40,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(45,43,40,0.06) 1px, transparent 1px)',
                 backgroundSize: '32px 32px',
               }}
             />
@@ -86,24 +86,24 @@ export default async function KontaktPage({
             >
               <path
                 d="M-20 210 C80 180 120 120 200 150 S340 120 420 90"
-                stroke="#8B5E3C"
+                stroke="#b0a283"
                 strokeWidth="2"
-                opacity="0.5"
+                opacity="0.7"
               />
               <path
                 d="M40 -20 C70 80 30 160 90 240 S140 360 120 420"
-                stroke="#8B5E3C"
+                stroke="#b0a283"
                 strokeWidth="1.5"
-                opacity="0.35"
+                opacity="0.5"
               />
-              <circle cx="200" cy="150" r="7" fill="#D47F3A" />
+              <circle cx="200" cy="150" r="7" fill="#a07d33" />
               <circle
                 cx="200"
                 cy="150"
                 r="16"
-                stroke="#D47F3A"
+                stroke="#a07d33"
                 strokeWidth="1.5"
-                opacity="0.5"
+                opacity="0.6"
               />
             </svg>
             <span className="absolute bottom-3 left-3 font-display text-xl italic text-cream">

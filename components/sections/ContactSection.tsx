@@ -26,7 +26,7 @@ export function ContactSection() {
           </h2>
           <a
             href={`tel:${SITE.phoneHref}`}
-            className="mt-8 inline-block font-display text-5xl text-wood-amber transition-colors hover:text-wood-light md:text-7xl"
+            className="mt-8 inline-block font-display text-5xl text-wood-amber transition-colors hover:text-wood-warm md:text-7xl"
           >
             {SITE.phone}
           </a>

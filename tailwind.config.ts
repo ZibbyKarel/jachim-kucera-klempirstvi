@@ -9,15 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Paleta odvozená z loga: antická mosazná zlatá + uhlový charcoal + krém.
+        // Světlá paleta odvozená přímo z loga: teplá světle šedá podloží (pozadí
+        // loga) + uhlový charcoal (text, ikona střechy) + antická mosazná zlatá.
+        // Pozn.: názvy tokenů jsou sémantické role, ne doslovné barvy —
+        //   `wood.dark`  = základní (světlé) pozadí stránky
+        //   `cream`      = popředí / text (charcoal), opacity = ztlumený text
+        //   `wood.*`     = mosazné zlaté akcenty
         wood: {
-          dark: '#1b1a17', // pozadí — uhlový charcoal (z loga)
-          medium: '#242019', // sekundární pozadí
-          warm: '#a98545', // ztlumená mosaz (čísla, sekundární akcent)
-          light: '#d9bd84', // světlá zlatá — hover
-          amber: '#c49a4c', // mosazná zlatá — primární akcent / CTA (z loga)
+          dark: '#e9e6e0', // ZÁKLADNÍ POZADÍ — teplá světle šedá (pozadí loga)
+          medium: '#f4f0e7', // sekundární / střídavé světlé pozadí (krém)
+          warm: '#7a5e26', // hluboká mosaz — čísla, drobné akcenty (silný kontrast)
+          light: '#c49a4c', // jasná mosazná zlatá z loga — hover, výplně, ozdoby
+          amber: '#a07d33', // mosazný akcent — text-akcenty, CTA výplň (čitelný na světlém)
         },
-        // Uhlová z loga (tmavý text na světlém pozadí, ikony).
+        // Uhlová z loga — text na světlém pozadí, ikony, tmavý text na zlatých CTA.
         charcoal: {
           DEFAULT: '#2d2b28',
           light: '#3a3833',
@@ -27,7 +32,7 @@ const config: Config = {
           medium: '#4A5568',
           light: '#718096',
         },
-        cream: '#f3ecdd', // text, linky — teplá bílá (pozadí loga)
+        cream: '#2d2b28', // POPŘEDÍ / TEXT — charcoal (opacity = ztlumený text)
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],

@@ -162,20 +162,20 @@ export function IsometricHouse() {
             rx="165"
             ry="26"
             fill="url(#house-shadow)"
-            opacity="0.5"
+            opacity="0.18"
           />
           <defs>
             <radialGradient id="house-shadow">
-              <stop offset="0%" stopColor="#000" stopOpacity="0.45" />
+              <stop offset="0%" stopColor="#000" stopOpacity="0.35" />
               <stop offset="100%" stopColor="#000" stopOpacity="0" />
             </radialGradient>
           </defs>
 
           {/* Neinteraktivní vizuál */}
-          <g id="g-foundation" stroke="#8B5E3C" strokeWidth="0.9" opacity="0.5">
+          <g id="g-foundation" stroke="#a07d33" strokeWidth="0.9" opacity="0.6">
             <DrawPaths d={PATHS.foundation} />
           </g>
-          <g id="g-walls" stroke="#F5ECD7" strokeWidth="1" opacity="0.85">
+          <g id="g-walls" stroke="#2d2b28" strokeWidth="1" opacity="0.85">
             <DrawPaths d={PATHS.walls} />
           </g>
 

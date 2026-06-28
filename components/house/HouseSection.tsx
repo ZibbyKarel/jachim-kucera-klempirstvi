@@ -35,8 +35,8 @@ export function HouseSection({
       <g
         className="transition-[stroke,opacity] duration-300"
         style={{
-          stroke: active ? 'var(--wood-amber)' : '#F5ECD7',
-          opacity: active ? 1 : 0.8,
+          stroke: active ? 'var(--wood-amber)' : '#2d2b28',
+          opacity: active ? 1 : 0.78,
         }}
       >
         {children}

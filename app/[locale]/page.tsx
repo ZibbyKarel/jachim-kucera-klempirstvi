@@ -31,7 +31,7 @@ export default async function HomePage({
             <p className="font-display text-lg italic text-cream md:text-xl">
               &bdquo;{SITE.tagline}&ldquo;
             </p>
-            <p className="font-body text-xs uppercase tracking-widest text-wood-light">
+            <p className="font-body text-xs uppercase tracking-widest text-wood-warm">
               {t('region')}
             </p>
           </div>

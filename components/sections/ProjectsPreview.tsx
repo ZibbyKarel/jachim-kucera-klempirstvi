@@ -33,7 +33,7 @@ export function ProjectsPreview() {
           </div>
           <Link
             href="/realizace"
-            className="group inline-flex shrink-0 items-center gap-3 font-body text-xs uppercase tracking-widest text-wood-amber transition-colors hover:text-wood-light"
+            className="group inline-flex shrink-0 items-center gap-3 font-body text-xs uppercase tracking-widest text-wood-amber transition-colors hover:text-wood-warm"
           >
             Všechny realizace
             <Arrow className="transition-transform duration-500 ease-craft group-hover:translate-x-1" />
@@ -58,7 +58,7 @@ export function ProjectsPreview() {
                 <h3 className="font-display text-lg italic text-cream transition-colors group-hover:text-wood-amber">
                   {project.title}
                 </h3>
-                <p className="font-body text-[0.65rem] uppercase tracking-widest text-wood-light">
+                <p className="font-body text-[0.65rem] uppercase tracking-widest text-wood-warm">
                   {categoryLabels[project.category]} · {project.location}
                 </p>
               </div>

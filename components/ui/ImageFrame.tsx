@@ -59,7 +59,7 @@ export function ImageFrame({
           }`}
           style={{
             background:
-              'repeating-linear-gradient(135deg, #2C1F14 0 22px, #271a10 22px 44px)',
+              'repeating-linear-gradient(135deg, #e6ddca 0 22px, #ded4bf 22px 44px)',
           }}
         >
           <svg

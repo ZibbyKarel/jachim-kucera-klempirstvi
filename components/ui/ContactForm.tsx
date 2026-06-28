@@ -114,7 +114,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <p className="font-display text-2xl italic text-cream">{t('success')}</p>
         <button
           onClick={() => setStatus('idle')}
-          className="font-body text-xs uppercase tracking-widest text-wood-amber hover:text-wood-light"
+          className="font-body text-xs uppercase tracking-widest text-wood-amber hover:text-wood-warm"
         >
           Odeslat další poptávku
         </button>
@@ -124,7 +124,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
 
   const inputClass = (invalid?: boolean) =>
     `w-full border-b bg-transparent py-3 font-body text-cream placeholder-cream/30 outline-none transition-colors duration-300 focus:border-wood-amber ${
-      invalid ? 'border-red-400/70' : 'border-cream/25'
+      invalid ? 'border-red-600/70' : 'border-cream/25'
     }`
 
   return (
@@ -163,7 +163,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             placeholder="Jan Novák"
           />
           {errors.name && (
-            <p id={fid('name-err')} className="mt-1 text-sm text-red-300">
+            <p id={fid('name-err')} className="mt-1 text-sm text-red-700">
               {errors.name}
             </p>
           )}
@@ -191,7 +191,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             placeholder="+420 777 123 456"
           />
           {errors.phone && (
-            <p id={fid('phone-err')} className="mt-1 text-sm text-red-300">
+            <p id={fid('phone-err')} className="mt-1 text-sm text-red-700">
               {errors.phone}
             </p>
           )}
@@ -226,7 +226,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
           <option value="Jiné">{t('serviceOther')}</option>
         </select>
         {errors.service && (
-          <p id={fid('service-err')} className="mt-1 text-sm text-red-300">
+          <p id={fid('service-err')} className="mt-1 text-sm text-red-700">
             {errors.service}
           </p>
         )}
@@ -251,7 +251,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       </div>
 
       {serverError && (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-red-700">
           {serverError}
         </p>
       )}
@@ -259,11 +259,11 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="inline-flex items-center justify-center gap-2 bg-wood-amber px-8 py-4 font-body text-sm font-medium uppercase tracking-widest text-wood-dark transition-all duration-300 hover:bg-wood-light disabled:cursor-not-allowed disabled:opacity-70"
+        className="inline-flex items-center justify-center gap-2 bg-wood-amber px-8 py-4 font-body text-sm font-medium uppercase tracking-widest text-charcoal transition-all duration-300 hover:bg-wood-light disabled:cursor-not-allowed disabled:opacity-70"
       >
         {status === 'loading' ? (
           <>
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-wood-dark/30 border-t-wood-dark" />
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-charcoal/30 border-t-charcoal" />
             {t('submitting')}
           </>
         ) : (

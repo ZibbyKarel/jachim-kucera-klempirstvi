@@ -75,7 +75,7 @@ export function ProjectGallery({
                 onClick={() => setFilter(f.key)}
                 className={`rounded-full border px-5 py-2 font-body text-xs uppercase tracking-widest transition-colors duration-300 ${
                   active
-                    ? 'border-wood-amber bg-wood-amber text-wood-dark'
+                    ? 'border-wood-amber bg-wood-amber text-charcoal'
                     : 'border-cream/20 text-cream/70 hover:border-cream/50 hover:text-cream'
                 }`}
               >
@@ -118,7 +118,7 @@ export function ProjectGallery({
                   {project.year}
                 </span>
               </div>
-              <p className="mt-1 font-body text-xs uppercase tracking-widest text-wood-light">
+              <p className="mt-1 font-body text-xs uppercase tracking-widest text-wood-warm">
                 {categoryLabels[project.category]} · {project.location}
               </p>
             </button>
@@ -164,7 +164,7 @@ function ProjectModal({
       aria-label={project.title}
     >
       <button
-        className="absolute inset-0 bg-wood-dark/90 backdrop-blur-sm"
+        className="absolute inset-0 bg-charcoal/70 backdrop-blur-sm"
         onClick={onClose}
         aria-label="Zavřít detail"
         tabIndex={-1}

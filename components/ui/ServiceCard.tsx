@@ -38,9 +38,9 @@ export function ServiceCard({ service }: { service: Service }) {
       <div
         className="pointer-events-none absolute inset-0 transition-[clip-path] duration-700 ease-craft [clip-path:inset(0_0_0_0)] group-hover:[clip-path:inset(0_0_100%_0)]"
         style={{
-          backgroundColor: '#2C1F14',
+          backgroundColor: '#efe7d6',
           backgroundImage:
-            'repeating-linear-gradient(92deg, rgba(0,0,0,0.18) 0 2px, transparent 2px 26px), repeating-linear-gradient(0deg, rgba(196,149,90,0.05) 0 1px, transparent 1px 9px)',
+            'repeating-linear-gradient(92deg, rgba(45,43,40,0.06) 0 2px, transparent 2px 26px), repeating-linear-gradient(0deg, rgba(160,125,51,0.08) 0 1px, transparent 1px 9px)',
           backgroundBlendMode: 'multiply',
         }}
       />
@@ -71,7 +71,7 @@ export function ServiceCard({ service }: { service: Service }) {
 
       <Link
         href={`/sluzby/${service.slug}`}
-        className="relative mt-8 inline-flex items-center gap-3 font-body text-xs uppercase tracking-widest text-wood-amber transition-colors hover:text-wood-light"
+        className="relative mt-8 inline-flex items-center gap-3 font-body text-xs uppercase tracking-widest text-wood-amber transition-colors hover:text-wood-warm"
       >
         Více o službě {service.title}
         <Arrow className="transition-transform duration-500 ease-craft group-hover:translate-x-1" />

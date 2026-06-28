@@ -147,7 +147,7 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center justify-between border-t border-cream/10 px-8 py-6">
-          <span className="font-body text-xs uppercase tracking-widest text-wood-light">
+          <span className="font-body text-xs uppercase tracking-widest text-wood-warm">
             {t('region')}
           </span>
           <LanguageSwitcher />

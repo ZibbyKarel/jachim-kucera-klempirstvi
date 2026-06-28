@@ -3,17 +3,18 @@
 @tailwind utilities;
 
 :root {
-  /* Design tokeny zrcadlí tailwind.config.ts — pro použití mimo utility třídy. */
-  --wood-dark: #1b1a17;
-  --wood-medium: #242019;
-  --wood-warm: #a98545;
-  --wood-light: #d9bd84;
-  --wood-amber: #c49a4c;
+  /* Design tokeny zrcadlí tailwind.config.ts — pro použití mimo utility třídy.
+     Světlá paleta odvozená z loga (světle šedé pozadí + charcoal + mosaz). */
+  --wood-dark: #e9e6e0; /* základní světlé pozadí */
+  --wood-medium: #f4f0e7; /* sekundární světlé pozadí */
+  --wood-warm: #7a5e26; /* hluboká mosaz */
+  --wood-light: #c49a4c; /* jasná mosazná zlatá (z loga) */
+  --wood-amber: #a07d33; /* mosazný akcent (čitelný na světlém) */
   --charcoal: #2d2b28;
   --steel-dark: #2d3748;
   --steel-medium: #4a5568;
   --steel-light: #718096;
-  --cream: #f3ecdd;
+  --cream: #2d2b28; /* popředí / text (charcoal) */
 }
 
 @layer base {
@@ -28,8 +29,8 @@
   }
 
   ::selection {
-    background-color: var(--wood-amber);
-    color: var(--wood-dark);
+    background-color: var(--wood-light);
+    color: var(--charcoal);
   }
 
   /* Viditelný a konzistentní focus ring napříč webem. */
@@ -73,7 +74,7 @@
   }
 
   .eyebrow {
-    @apply font-body text-xs uppercase tracking-widest text-wood-light;
+    @apply font-body text-xs uppercase tracking-widest text-wood-amber;
   }
 
   .link-underline {

@@ -13,23 +13,23 @@ export default function GlobalNotFound() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#1a1410',
-          color: '#F5ECD7',
+          backgroundColor: '#e9e6e0',
+          color: '#2d2b28',
           fontFamily: 'system-ui, sans-serif',
           textAlign: 'center',
           padding: '0 1.5rem',
         }}
       >
         <h1 style={{ fontSize: '2rem', margin: 0 }}>404 — Stránka nenalezena</h1>
-        <p style={{ color: 'rgba(245,236,215,0.7)', marginTop: '1rem' }}>
+        <p style={{ color: 'rgba(45,43,40,0.7)', marginTop: '1rem' }}>
           Tahle stránka tu není.
         </p>
         <Link
           href="/"
           style={{
             marginTop: '2rem',
-            backgroundColor: '#D47F3A',
-            color: '#1a1410',
+            backgroundColor: '#c49a4c',
+            color: '#2d2b28',
             padding: '0.75rem 1.5rem',
             textDecoration: 'none',
             textTransform: 'uppercase',
