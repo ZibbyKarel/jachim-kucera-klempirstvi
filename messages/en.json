@@ -18,6 +18,10 @@
   },
   "home": {
     "hint": "Explore the house — click on its parts",
+    "heroEyebrow": "Carpentry · Roofing · Tinsmithing",
+    "heroTitle": "Honest craftsmanship",
+    "heroCta": "Request a quote",
+    "scrollCue": "Scroll down",
     "servicesHeading": "What we do",
     "servicesIntro": "From the truss to the last gutter. Four crafts under one roof.",
     "projectsHeading": "Selected projects",

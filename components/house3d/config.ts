@@ -10,7 +10,6 @@ export type MenuId =
   | 'roof'
   | 'gutters'
   | 'pergola'
-  | 'entrance'
 
 export type LabelSide = 'left' | 'right'
 
@@ -58,14 +57,17 @@ export const DIM = {
   eave: 3,                          // výška okapu = h hlavní hmoty
 } as const
 
-/** Menu — pořadí, strana a kotvy. Pořadí dle spec. */
+/** Menu — pořadí, strana a kotvy. Pořadí dle spec.
+    Pozn.: Truhlářství = pergola + dětská prolézačka, Klempířství = okapy/svody +
+    oplechování komínu. Druhá část každé dvojice je geometrie sloučená do téhož
+    ArchElementu (rozsvítí se společně a vede na stejnou stránku), takže nemá
+    vlastní spojnici — kotva míří na hlavní část. */
 export const MENU: MenuItem[] = [
   // Levý sloupec — řazeno shora dolů dle výšky kotvy.
   { id: 'roof', service: 'Pokrývačství', element: 'Střecha', side: 'left', slot: 0, anchor: [-1.8, 4.35, 0.1] },
-  { id: 'pergola', service: 'Truhlářství', element: 'Pergola — trámy', side: 'left', slot: 1, anchor: [-1.7, 2.62, 4.9] },
-  // Pravý sloupec — řazeno shora dolů (okap → vstup).
-  { id: 'gutters', service: 'Klempířství', element: 'Okapy a svody', side: 'right', slot: 0, anchor: [3.3, 3.05, 3.42] },
-  { id: 'entrance', service: 'Kontakt', element: 'Vstup', side: 'right', slot: 1, anchor: [0.95, 1.15, 3.04] },
+  { id: 'pergola', service: 'Truhlářství', element: 'Pergola a prolézačka', side: 'left', slot: 1, anchor: [-1.7, 2.62, 4.9] },
+  // Pravý sloupec.
+  { id: 'gutters', service: 'Klempířství', element: 'Okapy, svody a komín', side: 'right', slot: 0, anchor: [3.3, 3.05, 3.42] },
 ]
 
 /** Kam se dívá kamera + úhel (30° horizontálně, 20° vertikálně). */

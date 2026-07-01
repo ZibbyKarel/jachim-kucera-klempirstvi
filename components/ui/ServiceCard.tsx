@@ -20,7 +20,7 @@ const icons: Record<string, JSX.Element> = {
 
 export function ServiceCard({ service }: { service: Service }) {
   return (
-    <article className="group relative flex h-full w-[85vw] max-w-[440px] shrink-0 flex-col justify-between overflow-hidden rounded-sm border border-cream/10 bg-wood-medium p-8 md:w-[42vw] md:p-10">
+    <article className="group relative flex h-full w-[85vw] max-w-[440px] shrink-0 flex-col justify-between overflow-hidden rounded-sm border border-cream/10 bg-wood-medium p-8 md:w-[42vw] md:p-10 xl:w-[21vw] xl:max-w-none xl:p-8">
       {/* Fotka odhalená pod texturou při hoveru */}
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-craft group-hover:opacity-100">
         <ImageFrame

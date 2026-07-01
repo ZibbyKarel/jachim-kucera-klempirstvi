@@ -52,9 +52,15 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(16px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        // Pobídka ke scrollu — jemné houpání šipky dolů + pulz průhlednosti.
+        'scroll-cue': {
+          '0%, 100%': { transform: 'translateY(0)', opacity: '0.55' },
+          '50%': { transform: 'translateY(7px)', opacity: '1' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        'scroll-cue': 'scroll-cue 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite',
       },
     },
   },

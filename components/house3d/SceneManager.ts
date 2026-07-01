@@ -15,6 +15,12 @@ import { CAMERA, COLORS, MENU, type MenuId } from './config'
 
 const DEG = Math.PI / 180
 
+/* Rezerva kolem domu při „fitu" do viewportu. Vyšší číslo = kamera couvne dál =
+   dům menší a víc papíru kolem (labely zůstanou v pevných sloupcích u kraje).
+   Hero chce dům cca na 60 % plochy, samostatný /nahled-3d ho chce co největší. */
+const FIT_MARGIN_HERO = 2.25
+const FIT_MARGIN_SOLO = 1.5
+
 export interface SceneOptions {
   onMenuSelect: (id: MenuId) => void
   /** Průhledné pozadí (scéna „leží" na papírovém panelu za canvasem). */
@@ -56,6 +62,8 @@ export class SceneManager {
   private floatAmp = 0.05
   private fovAmp = 0.4
 
+  private fitMargin = FIT_MARGIN_SOLO
+
   private lineMats = this.house.lineMaterials()
   private baseFov = CAMERA.fov
   private dirBase = new THREE.Vector3(6.5, 12, 7.5)
@@ -73,6 +81,8 @@ export class SceneManager {
     this.transparent = opts.transparent ?? false
     this.introActive = opts.playIntro !== false
     this.onIntroDone = opts.onIntroDone
+    // Hero (transparent) chce menší dům + víc papíru; samostatný náhled co největší.
+    this.fitMargin = this.transparent ? FIT_MARGIN_HERO : FIT_MARGIN_SOLO
     if (this.transparent) {
       this.floatAmp = 0.012
       this.fovAmp = 0.12
@@ -151,11 +161,16 @@ export class SceneManager {
       zmenší, proto musíme couvnout. */
   private fitDistance(aspect: number): number {
     const tanV = Math.tan((this.baseFov * DEG) / 2)
-    const halfW = 5.4 // poloviční šířka domu (vč. garáže/přesahů)
+    const halfW = 4.6 // poloviční šířka domu (pergola vlevo + prolézačka vpravo)
     const halfH = 3.3 // poloviční výška (od země po hřeben + rezerva)
     const dW = halfW / (tanV * aspect)
     const dH = halfH / tanV
-    return Math.max(dW, dH) * 1.5 // rezerva na labely kolem domu
+    // Hero na úzkém (portrét/mobil) viewportu: labely jdou pod dům (viz overlay),
+    // takže dům smí vyplnit ~90 % šířky → couvni jen podle šířky s malou rezervou.
+    if (this.transparent && aspect < 0.85) {
+      return Math.max(dW * 1.12, dH * 1.02)
+    }
+    return Math.max(dW, dH) * this.fitMargin // rezerva na labely + vzduch kolem
   }
 
   private placeCamera(): void {
@@ -330,7 +345,7 @@ export class SceneManager {
     // přepsal highlight nastavený hoverem labelu (canvas→prvek vs label→prvek)
     if (this.pointerOnCanvas) this.setHover(this.pickHover())
 
-    // idle: jemné vznášení domu
+    // idle: jemné vznášení domu (čistě klidová animace, žádné scroll „usazení")
     this.house.root.position.y = this.floatAmp * Math.sin(t * 0.6)
 
     // idle: dýchání kamery (fov)

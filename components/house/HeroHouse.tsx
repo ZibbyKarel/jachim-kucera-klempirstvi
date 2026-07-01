@@ -23,7 +23,6 @@ const HREF: Record<MenuId, string> = {
   roof: '/sluzby/pokryvacstvi',
   gutters: '/sluzby/klempirstvi',
   pergola: '/sluzby/tesarstvi',
-  entrance: '/kontakt',
 }
 
 export function HeroHouse() {

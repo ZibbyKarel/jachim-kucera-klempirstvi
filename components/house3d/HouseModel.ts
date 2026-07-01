@@ -20,12 +20,10 @@ export class HouseModel {
     this.root.name = 'house'
     this.buildFacade()
     this.buildRoof()
-    this.buildGutters()
-    this.buildPergola()
+    this.buildGutters() // okapy/svody + oplechování komínu (Klempířství)
+    this.buildPergola() // pergola + dětská prolézačka (Truhlářství)
     this.buildWindows()
-    this.buildGarage()
-    this.buildEntrance()
-    this.buildChimney()
+    this.buildEntrance() // vstupní dveře (dekor — Kontakt řeší CTA tlačítko)
     for (const el of this.all) this.root.add(el.group)
   }
 
@@ -46,12 +44,6 @@ export class HouseModel {
 
     // hlavní hmota
     el.addSolid(new THREE.BoxGeometry(w, h, d).translate(0, h / 2, 0))
-
-    // garážové křídlo (zdi)
-    const g = DIM.garage
-    el.addSolid(
-      new THREE.BoxGeometry(g.w, g.h, g.d).translate(w / 2 + g.w / 2, g.h / 2, d / 2 - g.d / 2)
-    )
 
     // štíty (trojúhelníky) na koncích x = ±w/2
     const apexY = h + DIM.roof.rise
@@ -102,6 +94,12 @@ export class HouseModel {
       new THREE.BoxGeometry(0.14, h, 0.14).translate(len / 2 - 0.2, h / 2, eaveZ),
       { thin: true }
     )
+    // komín s oplechováním (klempířská práce → patří pod Klempířství, rozsvítí se
+    // společně s okapy). Hmota komínu + tenký „límec" oplechování u paty.
+    el.addSolid(new THREE.BoxGeometry(0.5, 1.7, 0.5).translate(1.65, 4.95, -0.4))
+    el.addSolid(new THREE.BoxGeometry(0.66, 0.08, 0.66).translate(1.65, 4.16, -0.4), {
+      thin: true,
+    })
     this.register(el)
   }
 
@@ -138,7 +136,111 @@ export class HouseModel {
         { thin: true }
       )
     }
+    // dětská prolézačka v pravém předzahradí (truhlářská práce → také Truhlářství)
+    this.buildPlayground(el)
     this.register(el)
+  }
+
+  /* ---- Dětská prolézačka: skluzavka + houpačka --------------------------- */
+  /*  Sloučená do pergolového ArchElementu — rozsvítí se i klikne jako Truhlářství.
+      Dvě jednoznačně dětské hmoty: otevřená plošina se žebříkem a skluzem, vedle  */
+  /*  A-rám houpačky se sedátkem. Žádná stříška (ať to nečte jako bouda).          */
+  private buildPlayground(el: ArchElement): void {
+    this.buildSlide(el)
+    this.buildSwing(el)
+  }
+
+  /* Skluzavka: otevřená plošina na 4 sloupcích, zábradlí, žebřík vzadu, skluz vpřed. */
+  private buildSlide(el: ArchElement): void {
+    const px = 4.05 // střed plošiny (pravé předzahradí)
+    const pz = 4.2
+    const fw = 0.95
+    const fd = 0.95
+    const post = 0.09
+    const deckY = 1.0
+    const railY = deckY + 0.5
+    const x0 = px - fw / 2
+    const x1 = px + fw / 2
+    const z0 = pz - fd / 2 // zadní strana (žebřík)
+    const z1 = pz + fd / 2 // přední strana (skluz)
+
+    // 4 sloupky (až po zábradlí)
+    for (const cx of [x0, x1]) {
+      for (const cz of [z0, z1]) {
+        el.addSolid(new THREE.BoxGeometry(post, railY, post).translate(cx, railY / 2, cz), {
+          thin: true,
+        })
+      }
+    }
+    // plošina
+    el.addSolid(new THREE.BoxGeometry(fw + post, 0.08, fd + post).translate(px, deckY, pz), {
+      thin: true,
+    })
+    // zábradlí — zadní příčka + boční tyče (předek otevřený pro skluz)
+    el.addSolid(new THREE.BoxGeometry(fw + post, 0.05, 0.05).translate(px, railY, z0), {
+      thin: true,
+    })
+    for (const cx of [x0, x1]) {
+      el.addSolid(new THREE.BoxGeometry(0.05, 0.05, fd + post).translate(cx, railY, pz), {
+        thin: true,
+      })
+    }
+    // žebřík: 3 příčle vzadu mezi sloupky
+    for (let i = 1; i <= 3; i++) {
+      el.addSolid(
+        new THREE.BoxGeometry(fw - 0.06, 0.045, 0.045).translate(px, (i / 4) * deckY, z0),
+        { thin: true }
+      )
+    }
+    // skluz: koryto + dvě boční lišty, šikmo z plošiny vpřed k zemi
+    const run = 1.4
+    const ang = Math.atan2(deckY - 0.05, run * 0.9)
+    const cz = z1 + run * 0.42
+    const cy = deckY * 0.42
+    const chute = new THREE.BoxGeometry(0.44, 0.05, run)
+    chute.rotateX(ang)
+    chute.translate(px, cy, cz)
+    el.addSolid(chute, { thin: true })
+    for (const sx of [-0.23, 0.23]) {
+      const rail = new THREE.BoxGeometry(0.04, 0.13, run)
+      rail.rotateX(ang)
+      rail.translate(px + sx, cy + 0.07, cz)
+      el.addSolid(rail, { thin: true })
+    }
+  }
+
+  /* Houpačka: A-rámy po stranách, horní nosník, jedno sedátko na tyčkách. */
+  private buildSwing(el: ArchElement): void {
+    const px = 2.55 // vlevo od skluzavky (blíž k pergole)
+    const pz = 4.35
+    const h = 1.3
+    const halfW = 0.55 // rozpětí nosníku (z)
+    const legSpread = 0.42 // rozkročení A-rámu (x)
+    const z0 = pz - halfW
+    const z1 = pz + halfW
+
+    // dva A-rámy (každý = dvě šikmé nohy sbíhající se k vrcholu)
+    for (const cz of [z0, z1]) {
+      for (const sx of [-legSpread, legSpread]) {
+        const leg = new THREE.BoxGeometry(0.07, h + 0.12, 0.07)
+        leg.rotateZ(Math.atan2(sx, h))
+        leg.translate(px + sx / 2, h / 2, cz)
+        el.addSolid(leg, { thin: true })
+      }
+    }
+    // horní nosník
+    el.addSolid(new THREE.BoxGeometry(0.08, 0.08, halfW * 2 + 0.1).translate(px, h, pz), {
+      thin: true,
+    })
+    // sedátko + dvě závěsné tyčky
+    const seatY = 0.5
+    el.addSolid(new THREE.BoxGeometry(0.34, 0.05, 0.22).translate(px, seatY, pz), { thin: true })
+    for (const cz of [pz - 0.16, pz + 0.16]) {
+      el.addSolid(
+        new THREE.BoxGeometry(0.03, h - seatY, 0.03).translate(px, (h + seatY) / 2, cz),
+        { thin: true }
+      )
+    }
   }
 
   /* ---- Okna: InstancedMesh tabulí + obrysové rámy ------------------------- */
@@ -181,28 +283,9 @@ export class HouseModel {
     this.register(el)
   }
 
-  /* ---- Garáž: vrata jako stoh panelů (vodorovné dělení) ------------------- */
-  private buildGarage(): void {
-    const el = new ArchElement(null)
-    const g = DIM.garage
-    const cx = DIM.main.w / 2 + g.w / 2
-    const zFront = DIM.main.d / 2 + 0.02
-    const doorW = g.w - 0.5
-    const doorH = 2.2
-    const panels = 4
-    const ph = doorH / panels
-    for (let i = 0; i < panels; i++) {
-      el.addSolid(
-        new THREE.BoxGeometry(doorW, ph - 0.02, 0.08).translate(cx, ph / 2 + i * ph, zFront),
-        { thin: true }
-      )
-    }
-    this.register(el)
-  }
-
-  /* ---- Vstup: dveře + jednoduchá stříška ---------------------------------- */
+  /* ---- Vstup: dveře + jednoduchá stříška (dekor, mimo menu) --------------- */
   private buildEntrance(): void {
-    const el = new ArchElement('entrance', this.anchorOf('entrance'))
+    const el = new ArchElement(null)
     const zFront = DIM.main.d / 2 + 0.02
     const cx = 0.95
     // dveře (dvě křídla → svislé dělení přes dva boxy)
@@ -216,13 +299,6 @@ export class HouseModel {
     el.addSolid(
       new THREE.BoxGeometry(1.6, 0.12, 0.7).translate(cx, 2.45, zFront + 0.25)
     )
-    this.register(el)
-  }
-
-  /* ---- Komín (dekor, mimo menu) ------------------------------------------ */
-  private buildChimney(): void {
-    const el = new ArchElement(null)
-    el.addSolid(new THREE.BoxGeometry(0.5, 1.7, 0.5).translate(1.65, 4.95, -0.4))
     this.register(el)
   }
 

@@ -12,7 +12,9 @@ export function ContactSection() {
     <section
       id="kontakt"
       aria-labelledby="contact-cta-heading"
-      className="relative overflow-hidden border-t border-cream/10 bg-wood-dark py-24 md:py-32"
+      /* Poslední sekce — přes ni už nic nenajíždí. Překrytí předchozí řeší obal
+         <StackCover> (viz ProjectsPreview). */
+      className="relative min-h-[100dvh] overflow-hidden bg-wood-dark py-24 shadow-[0_-30px_60px_-30px_rgba(0,0,0,0.55)] md:py-32"
     >
       <div className="grain absolute inset-0" aria-hidden="true" />
       <div className="container-content relative">

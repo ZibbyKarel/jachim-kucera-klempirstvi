@@ -32,6 +32,7 @@ export class MenuOverlay {
   private container: HTMLElement
   private layer: HTMLDivElement
   private svg: SVGSVGElement
+  private labelsBox!: HTMLDivElement
   private entries = new Map<MenuId, LabelEntry>()
   private active: MenuId | null = null
 
@@ -48,6 +49,12 @@ export class MenuOverlay {
     this.svg = document.createElementNS(SVG_NS, 'svg')
     this.svg.classList.add('h3d-svg')
     this.layer.appendChild(this.svg)
+
+    // Labely v samostatném boxu: na desktopu absolutně v bočních sloupcích,
+    // na mobilu (přes CSS) jako řádek „chipů" pod domem (spojnice se skryjí).
+    this.labelsBox = document.createElement('div')
+    this.labelsBox.className = 'h3d-labels'
+    this.layer.appendChild(this.labelsBox)
 
     const leftCount = MENU.filter((m) => m.side === 'left').length
     const rightCount = MENU.filter((m) => m.side === 'right').length
@@ -86,7 +93,7 @@ export class MenuOverlay {
     btn.addEventListener('blur', () => this.handlers.onHover(null))
     btn.addEventListener('click', () => this.handlers.onSelect(item.id))
 
-    this.layer.appendChild(btn)
+    this.labelsBox.appendChild(btn)
     return { item, root: btn, line, dot }
   }
 
@@ -116,14 +123,34 @@ export class MenuOverlay {
     // getBoundingClientRect() vrací scalované pixely. Podělíme měřítkem, jinak by
     // se startovní body spojnic při scrollu odpojily od labelů.
     const sf = crect.width / size.w || 1
+    // Mobil: labely jsou „chipy" v řádku pod domem → čára vychází z horního středu
+    // chipu nahoru ke kotvě. Desktop: z vnitřní (boční) hrany labelu ve sloupci.
+    const mobile = size.w <= 768
+    // Seřaď chipy zleva doprava dle promítnuté X kotvy → spojnice se nekříží.
+    if (mobile) {
+      const ranked = [...this.entries.values()]
+        .map((e) => ({ e, x: anchors.get(e.item.id)?.x ?? 0 }))
+        .sort((p, q) => p.x - q.x)
+      ranked.forEach(({ e }, i) => {
+        const v = String(i)
+        if (e.root.style.order !== v) e.root.style.order = v
+      })
+    }
     for (const [id, e] of this.entries) {
       const a = anchors.get(id)
       if (!a) continue
-      // startovní bod = vnitřní hrana labelu (přepočtený do nescalovaných souřadnic)
+      // startovní bod (přepočtený do nescalovaných souřadnic)
       const r = e.root.getBoundingClientRect()
-      const edge = e.item.side === 'left' ? r.right : r.left
-      const sx = (edge - crect.left) / sf
-      const sy = (r.top - crect.top + r.height / 2) / sf
+      let sx: number
+      let sy: number
+      if (mobile) {
+        sx = (r.left + r.width / 2 - crect.left) / sf
+        sy = (r.top - crect.top) / sf
+      } else {
+        const edge = e.item.side === 'left' ? r.right : r.left
+        sx = (edge - crect.left) / sf
+        sy = (r.top - crect.top + r.height / 2) / sf
+      }
 
       e.line.setAttribute('x1', String(sx))
       e.line.setAttribute('y1', String(sy))
@@ -142,6 +169,7 @@ export class MenuOverlay {
 .h3d-overlay{position:absolute;inset:0;pointer-events:none;font-family:var(--font-body,system-ui,sans-serif);z-index:5;opacity:0;transition:opacity .7s ease;}
 .h3d-overlay.is-ready{opacity:1;}
 .h3d-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+.h3d-labels{position:absolute;inset:0;}
 .h3d-line{stroke:${COLORS.inkSoft};stroke-width:1.3;transition:stroke .3s ease,stroke-width .3s ease,opacity .3s ease;}
 .h3d-line.is-active{stroke:${COLORS.accent};stroke-width:2;}
 .h3d-dot{fill:${COLORS.inkSoft};transition:fill .3s ease,r .3s ease;}
@@ -156,7 +184,14 @@ export class MenuOverlay {
 .h3d-element{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;opacity:.7;}
 .h3d-label:focus-visible{outline:2px solid ${COLORS.accent};outline-offset:3px;border-radius:3px;}
 @media (max-width:1024px){.h3d-service{font-size:1.4rem;}.h3d-element{font-size:.6rem;}}
-@media (max-width:768px){.h3d-service{font-size:1.2rem;}.h3d-element{font-size:.56rem;}}
+/* Mobil: dům vyplní šířku → labely jako řádek „chipů" pod domem, spojnice z horního
+   středu chipu nahoru ke kotvě (viz layout()). */
+@media (max-width:768px){
+.h3d-service{font-size:1.05rem;}.h3d-element{font-size:.54rem;}
+.h3d-labels{inset:auto 0 4.75rem 0;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:.35rem 1rem;padding:0 1rem;}
+.h3d-label{position:static;align-items:center;text-align:center;left:auto;right:auto;top:auto!important;transform:none!important;padding:.3rem .45rem;gap:.1rem;}
+.h3d-label.h3d-left,.h3d-label.h3d-right{align-items:center;text-align:center;}
+}
 @media (prefers-reduced-motion:reduce){.h3d-overlay,.h3d-label,.h3d-line,.h3d-dot{transition:none;}}
 `
     const style = document.createElement('style')

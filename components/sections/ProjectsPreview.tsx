@@ -18,7 +18,9 @@ export function ProjectsPreview() {
   return (
     <section
       aria-labelledby="projects-heading"
-      className="bg-wood-dark py-24 md:py-32"
+      /* Překrytí řeší obal <StackCover> (pin předchozí + náběh přes ni). Sekce je
+         neprůhledná na celou plochu; horní stín dělá náběžnou hranu čitelnou. */
+      className="relative min-h-[100dvh] bg-wood-dark py-24 shadow-[0_-30px_60px_-30px_rgba(0,0,0,0.55)] md:py-32"
     >
       <div className="container-content">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
