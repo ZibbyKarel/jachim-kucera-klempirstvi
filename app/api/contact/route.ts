@@ -1,19 +1,6 @@
-import { Resend } from 'resend'
-
 export const runtime = 'nodejs'
 
 const PHONE_RE = /^(\+|00)?\d[\d\s/-]{7,15}$/
-
-const FROM = 'web@jachim-kucera-tesarstvi.cz'
-const TO = 'info@jachim-kucera-tesarstvi.cz'
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>
@@ -45,11 +32,10 @@ export async function POST(req: Request) {
     return Response.json({ error: 'service_required' }, { status: 422 })
   }
 
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) {
-    // V developmentu bez klíče zalogujeme a vrátíme úspěch, ať jde UI otestovat.
+  const accessKey = process.env.WEB3FORMS_KEY
+  if (!accessKey) {
     if (process.env.NODE_ENV !== 'production') {
-      console.info('[contact] RESEND_API_KEY chybí — poptávka:', {
+      console.info('[contact] WEB3FORMS_KEY chybí — poptávka:', {
         name,
         phone,
         service,
@@ -60,35 +46,26 @@ export async function POST(req: Request) {
     return Response.json({ error: 'not_configured' }, { status: 500 })
   }
 
-  const resend = new Resend(apiKey)
-
-  const html = `
-    <div style="font-family: Arial, sans-serif; color: #1a1410;">
-      <h2 style="margin: 0 0 16px;">Nová poptávka z webu</h2>
-      <table style="border-collapse: collapse;">
-        <tr><td style="padding: 4px 16px 4px 0; color: #8B5E3C;">Jméno</td><td><strong>${escapeHtml(name)}</strong></td></tr>
-        <tr><td style="padding: 4px 16px 4px 0; color: #8B5E3C;">Telefon</td><td><a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a></td></tr>
-        <tr><td style="padding: 4px 16px 4px 0; color: #8B5E3C;">Služba</td><td>${escapeHtml(service)}</td></tr>
-      </table>
-      ${
-        message
-          ? `<p style="margin-top: 16px; color: #8B5E3C;">Zpráva</p><p style="white-space: pre-wrap;">${escapeHtml(message)}</p>`
-          : ''
-      }
-    </div>`
-
   try {
-    const { error } = await resend.emails.send({
-      from: `Web — Jáchim & Kučera <${FROM}>`,
-      to: TO,
-      replyTo: undefined,
-      subject: `Nová poptávka — ${service} — ${name}`,
-      html,
-      text: `Nová poptávka\nJméno: ${name}\nTelefon: ${phone}\nSlužba: ${service}\nZpráva: ${message || '—'}`,
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: accessKey,
+        subject: `Nová poptávka — ${service} — ${name}`,
+        from_name: 'Web — Jáchim & Kučera',
+        name,
+        phone,
+        service,
+        message: message || '—',
+        botcheck: '', // Web3Forms honeypot must be empty
+      }),
     })
 
-    if (error) {
-      console.error('[contact] Resend error:', error)
+    const data = await res.json().catch(() => null)
+
+    if (!res.ok || !data?.success) {
+      console.error('[contact] Web3Forms error:', data)
       return Response.json({ error: 'send_failed' }, { status: 502 })
     }
 
